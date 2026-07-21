@@ -22,11 +22,11 @@
         config.flake.homeModules.nix-tools
         config.flake.homeModules.btop
         config.flake.homeModules.lazygit
+        config.flake.homeModules.toolbox
 
         ../home-modules/devenv.nix
         ../home-modules/nvf.nix
         ../home-modules/packages.nix
-        ../home-modules/toolbox.nix
       ];
     });
 }
