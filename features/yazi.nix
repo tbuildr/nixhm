@@ -1,5 +1,9 @@
 {...}: {
-  flake.homeModules.yazi = {
+  flake.homeModules.yazi = {pkgs, ...}: {
+    home.packages = [
+      pkgs.yazi
+    ];
+
     xdg.configFile = {
       "yazi/init.lua".source =
         ../dotfiles/yazi/init.lua;
