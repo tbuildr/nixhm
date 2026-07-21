@@ -23,8 +23,8 @@
         config.flake.homeModules.btop
         config.flake.homeModules.lazygit
         config.flake.homeModules.toolbox
+        config.flake.homeModules.devenv
 
-        ../home-modules/devenv.nix
         ../home-modules/nvf.nix
         ../home-modules/packages.nix
       ];
