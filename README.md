@@ -65,7 +65,6 @@ Toolbx, Mullvad and the scripts in `~/.local/bin`.
 .
 ├── dotfiles
 │   ├── fastfetch
-│   │   ├── bazzite.png
 │   │   └── config.jsonc
 │   ├── kitty
 │   │   └── kitty.conf
@@ -359,12 +358,11 @@ Home Manager deploys:
 
 ```text
 ~/.config/fastfetch/config.jsonc
-~/.config/fastfetch/bazzite.png
 ```
 
 The configuration uses:
 
-- a custom Bazzite PNG logo;
+- a custom os PNG logo (from /usr/share/fastfetch/os-logo.png)
 - Kitty's terminal image protocol;
 - a Gruvbox-inspired colour palette;
 - grouped system, hardware, network, peripheral, media and date/time sections;
