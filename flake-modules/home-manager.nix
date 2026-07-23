@@ -19,6 +19,7 @@
         config.flake.homeModules.cli-tools
         config.flake.homeModules.nix-tools
         config.flake.homeModules.terminal
+        config.flake.homeModules.fastfetch
         config.flake.homeModules.yazi
         config.flake.homeModules.niri
         config.flake.homeModules.portals

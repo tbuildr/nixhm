@@ -41,10 +41,9 @@
         bls = "/bin/ls";
         bvi = "/bin/vi";
         bat = "bat --paging=never";
-
-        # Override the stock Bazzite fastfetch alias.
-        fastfetch = "/usr/bin/fastfetch";
-        neofetch = "/usr/bin/fastfetch";
+        # Alias to run wrapped fastfetch function ahead of Bazzite /usr/bin/fastfetch
+        fastfetch = "command fastfetch";
+        neofetch = "command fastfetch";
       };
 
       interactiveShellInit = ''
