@@ -5,6 +5,7 @@
     "source": "/usr/share/fastfetch/os-logo.png",
     "type": "kitty",
     "padding": {
+      "top": 1,
       "right": 1,
       "left": 1
     }
