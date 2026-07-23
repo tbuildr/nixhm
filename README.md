@@ -1,16 +1,3 @@
-# Tom's Nix Home Manager configuration
-
-## Overview
-
-# tnxhm
-
-My personal standalone Nix Home Manager configuration for Fedora Atomic and my
-custom `tbzos` image.
-
-The repository uses **flake-parts**, **import-tree**, and a feature-oriented
-structure to manage my user environment while leaving operating-system
-responsibilities with Fedora and the immutable host image.
-
 # tnxhm
 
 A reusable, feature-oriented Nix Home Manager configuration for Fedora Atomic
@@ -59,7 +46,7 @@ The public repository never imports or refers to a private repository.
 The exported Home Manager module includes:
 
 - Fish shell configuration;
-- Starship prompt configuration for the host and Toolbx;
+- Starship prompt configuration for the host and Toolbox;
 - Zoxide and Fzf integration;
 - Neovim configured declaratively through NVF;
 - native modular Niri configuration;
@@ -67,7 +54,7 @@ The exported Home Manager module includes:
 - desktop portal preferences;
 - fonts and Fontconfig;
 - an SSH agent and graphical askpass helper;
-- a custom Fedora Toolbx image definition;
+- a custom Fedora Toolbox image definition;
 - Nix development and maintenance tools;
 - general command-line applications;
 - wrapped Btop, Lazygit, Fastfetch and Yazi packages.
@@ -134,11 +121,26 @@ A small user-specific wrapper creates that final configuration.
 │   └── yazi.nix
 │
 ├── flake-modules/
-│   └── home-manager.nix
+│   ├── home-manager.nix
+│   └── templates.nix
+│
+├── templates/
+│   └── home-manager-wrapper/
+│       ├── flake.nix
+│       └── README.md
+│
+├── flake.lock
 │
 ├── flake.lock
 ├── flake.nix
 └── README.md
+```
+
+`flake-modules/templates.nix` exports the wrapper starter as:
+
+```nix
+templates.default
+templates.home-manager-wrapper
 ```
 
 Every Nix file under `features/` is discovered automatically using
@@ -156,6 +158,7 @@ The main imports are:
 ```nix
 inputs.home-manager.flakeModules.home-manager
 ./flake-modules/home-manager.nix
+./flake-modules/templates.nix
 (inputs.import-tree ./features)
 ```
 
@@ -405,7 +408,7 @@ The normal host prompt uses:
 ~/.config/starship/starship.toml
 ```
 
-Toolbx shells use:
+Toolbox shells use:
 
 ```text
 ~/.config/starship/starship-toolbox.toml
@@ -417,7 +420,7 @@ The selection order is:
 
 ```text
 DEVENV_ROOT   project-specific prompt
-TOOLBOX_PATH  Toolbx prompt
+TOOLBOX_PATH  Toolbox prompt
 otherwise     normal host prompt
 ```
 
@@ -440,14 +443,14 @@ Fontconfig enabled for the user environment.
 Keeping the Kitty executable in the host image ensures that a terminal remains
 available even if Nix or Home Manager needs repair.
 
-## Toolbx and Podman
+## Toolbox and Podman
 
-The Toolbx feature generates:
+The Toolbox feature generates:
 
 ```text
 ~/.config/containers/toolbox.conf
 ~/.config/toolbox-image/Containerfile
-~/.config/containers/systemd/toolbox-image.build
+~/.config/containers/systemd/toolbox-dev.build
 ```
 
 The exact image name may be adjusted in `features/toolbox.nix`.
@@ -467,7 +470,7 @@ The image creates:
 /nix -> /run/host/nix
 ```
 
-Toolbx exposes the host filesystem under `/run/host`. This symlink makes the
+Toolbox exposes the host filesystem under `/run/host`. This symlink makes the
 host Nix store available at `/nix`, which allows Home Manager-generated links
 and Nix-installed programs to work inside the container.
 
@@ -481,7 +484,7 @@ nix run .#toolbox-image-build
 The generated build uses Podman with a fresh base-image check and squashed
 output.
 
-Rebuilding the image affects newly created containers. Existing Toolbx
+Rebuilding the image affects newly created containers. Existing Toolbox
 containers retain their existing writable container filesystem and must be
 updated internally or recreated.
 
@@ -1076,7 +1079,7 @@ system-level components such as:
 - Fuzzel;
 - Swaylock;
 - Podman;
-- Toolbx;
+- Toolbox;
 - graphical drivers;
 - desktop and hardware integration;
 - the Fastfetch operating-system logo;
