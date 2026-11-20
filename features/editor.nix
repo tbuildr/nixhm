@@ -32,12 +32,53 @@
           end, copy_mouse_selection_ns)
         '';
 
+        # ------------------------------------------------------------
+        # Hardening: keep sensitive file contents off disk
+        # ------------------------------------------------------------
+
+        # Persistent undo is enabled below, but undo files store the full
+        # edit history in plain text under ~/.local/state/nvim/undo/.
+        # Disable it (plus swap/backup/shada history) for buffers that are
+        # likely to contain secrets, and for sudoedit/temp files.
+        luaConfigRC.noUndoForSecrets = ''
+          local sensitive_patterns = {
+            "/tmp/*",
+            "/var/tmp/*",
+            "/dev/shm/*",
+            "*.env",
+            "*.env.*",
+            ".env",
+            "*.age",
+            "*.pem",
+            "*.key",
+            "*/.ssh/*",
+            "*/.gnupg/*",
+            "*/.password-store/*",
+            "*/.passage/*",
+            "*/secrets/*",
+          }
+
+          vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+            group = vim.api.nvim_create_augroup("no-undo-for-secrets", { clear = true }),
+            pattern = sensitive_patterns,
+            callback = function()
+              vim.opt_local.undofile = false
+              vim.opt_local.swapfile = false
+              vim.opt_local.backup = false
+              vim.opt_local.writebackup = false
+              -- Don't record marks/registers/history for this session's shada.
+              vim.opt.shadafile = "NONE"
+            end,
+          })
+        '';
+
         # Allow `vi`, `vim` and `nvim` to start NVF.
         viAlias = true;
         vimAlias = true;
 
         # Basic editor behaviour.
         lineNumberMode = "relNumber";
+        # Sets ignorecase + smartcase.
         searchCase = "smart";
         preventJunkFiles = true;
 
@@ -54,7 +95,7 @@
           softtabstop = 2;
           shiftwidth = 2;
 
-          smartindent = true;
+          # smartindent removed: treesitter indentation handles this.
 
           splitbelow = true;
           splitright = true;
@@ -62,9 +103,6 @@
           cursorline = true;
           signcolumn = "yes";
           scrolloff = 8;
-
-          ignorecase = true;
-          smartcase = true;
 
           updatetime = 200;
           timeoutlen = 300;
@@ -89,11 +127,6 @@
         # Language support
         # ------------------------------------------------------------
 
-        # Additional command-line tools available inside NVF's wrapped Neovim.
-        extraPackages = with pkgs; [
-          tree-sitter
-        ];
-
         lsp = {
           enable = true;
           formatOnSave = true;
@@ -101,7 +134,7 @@
           lightbulb.enable = true;
           trouble.enable = true;
 
-          # Blink already provides signature/completion integration.
+          # Noice provides signature help, so lsp_signature isn't needed.
           lspSignature.enable = false;
         };
 
@@ -112,12 +145,14 @@
 
           nix.enable = true;
           bash.enable = true;
-          fish.enable = true;
           clang.enable = true;
           lua.enable = true;
           markdown.enable = true;
           json.enable = true;
           toml.enable = true;
+
+          # Re-enable if you still edit fish scripts.
+          # fish.enable = true;
 
           # Enable these when you need them:
           #
@@ -225,8 +260,6 @@
           };
         };
 
-        # Other NVF configuration...
-
         terminal.toggleterm = {
           enable = true;
 
@@ -272,7 +305,8 @@
 
         visuals = {
           nvim-web-devicons.enable = true;
-          nvim-cursorline.enable = true;
+          # nvim-cursorline removed: illuminate handles word highlighting
+          # and opts.cursorline handles the line highlight.
           fidget-nvim.enable = true;
           indent-blankline.enable = true;
         };
@@ -282,7 +316,19 @@
 
         ui = {
           borders.enable = true;
-          noice.enable = true;
+
+          noice = {
+            enable = true;
+
+            setupOpts = {
+              # Fidget shows LSP progress; avoid duplicate messages.
+              lsp.progress.enabled = false;
+
+              # Snacks owns vim.notify; stop noice overriding it.
+              notify.enabled = false;
+            };
+          };
+
           illuminate.enable = true;
         };
 
@@ -291,17 +337,10 @@
         # ------------------------------------------------------------
 
         keymaps = [
-          # Copy selected text to the system clipboard.
+          # Copy selected text to the system clipboard and keep the selection.
+          # (<C-S-c> removed: kitty intercepts ctrl+shift+c for its own copy.)
           {
             key = "<C-c>";
-            mode = ["x" "s"];
-            action = ''"+ygv'';
-            desc = "Copy selection to system clipboard";
-            silent = true;
-          }
-
-          {
-            key = "<C-S-c>";
             mode = ["x" "s"];
             action = ''"+ygv'';
             desc = "Copy selection to system clipboard";
@@ -326,7 +365,7 @@
             silent = true;
           }
 
-          # Paste while typing.
+          # Paste while typing. (Use <C-q> for Vim's insert-literal.)
           {
             key = "<C-v>";
             mode = "i";

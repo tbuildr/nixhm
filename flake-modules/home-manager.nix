@@ -7,7 +7,7 @@
     imports = [
       # External Home Manager modules.
       inputs.nix-index-database.homeModules.default
-      inputs.nvf.homeManagerModules.nvf
+      inputs.nvf.homeModules.nvf
 
       # Reusable public features.
       config.flake.homeModules.bash
@@ -23,6 +23,7 @@
       config.flake.homeModules.lazygit
       config.flake.homeModules.niri
       config.flake.homeModules.nix-tools
+      config.flake.homeModules.nixgl
       config.flake.homeModules.portals
       config.flake.homeModules.shell
       config.flake.homeModules.ssh
