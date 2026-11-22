@@ -20,6 +20,7 @@
       (config.lib.nixGL.wrap (herdr-desktop.overrideAttrs (old: {
         buildInputs = (old.buildInputs or []) ++ [zstd];
       })))
+      huggingface-cli
       lazydocker
       kind
       kubectl
