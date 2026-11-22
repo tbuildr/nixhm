@@ -1,4 +1,4 @@
-# tnxhm Home Manager wrapper
+# nixhm Home Manager wrapper
 
 Edit `flake.nix` and replace:
 

@@ -1,7 +1,7 @@
 # features/shell.nix — settings shared by every shell
 {...}: {
   flake.homeModules.shell = {lib, ...}: {
-    options.tnxhm.shell = {
+    options.nixhm.shell = {
       abbreviations = lib.mkOption {
         type = lib.types.attrsOf lib.types.str;
         default = {};
@@ -24,7 +24,7 @@
       # background-color query reply (esp. short-lived calls, or glow -p's
       # raw-mode read picking up a stale reply inside devenv). Add new
       # offenders here as they turn up.
-      tnxhm.shell.dumbTermWrapped = ["supabase" "gh" "glow"];
+      nixhm.shell.dumbTermWrapped = ["supabase" "gh" "glow"];
 
       home.shellAliases = {
         ls = "eza --icons --group-directories-first";

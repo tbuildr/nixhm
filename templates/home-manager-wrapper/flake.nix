@@ -1,14 +1,14 @@
 {
-  description = "Home Manager configuration using tnxhm";
+  description = "Home Manager configuration using nixhm";
   inputs = {
-    tnxhm.url = "github:tbuildr/tnxhm";
-    nixpkgs.follows = "tnxhm/nixpkgs";
-    home-manager.follows = "tnxhm/home-manager";
+    nixhm.url = "github:tbuildr/nixhm";
+    nixpkgs.follows = "nixhm/nixpkgs";
+    home-manager.follows = "nixhm/home-manager";
   };
   outputs = {
     nixpkgs,
     home-manager,
-    tnxhm,
+    nixhm,
     ...
   }: let
     system = "x86_64-linux";
@@ -20,7 +20,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       modules = [
         # Public packages, programs and dotfiles.
-        tnxhm.homeModules.default
+        nixhm.homeModules.default
         # Machine/user-specific profile.
         {
           home = {

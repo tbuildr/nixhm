@@ -1,18 +1,18 @@
-# tnxhm
+# nixhm
 
 A reusable, feature-oriented Nix Home Manager module for Fedora Atomic (or
 similar) systems running Niri.
 
-`tnxhm` is the **public, generic** half of a Home Manager setup. It manages
+`nixhm` is the **public, generic** half of a Home Manager setup. It manages
 apps, CLI tools, shell config, and dotfiles that don't depend on who you are.
 Anything personal (username, home directory, Git identity, signing keys) lives
 in a separate, small **wrapper flake** that imports this module.
 
 ```
-private/user wrapper  →  imports  →  public tnxhm
+private/user wrapper  →  imports  →  public nixhm
 ```
 
-`tnxhm` never imports or knows about the wrapper. It exports a single module:
+`nixhm` never imports or knows about the wrapper. It exports a single module:
 `homeModules.default`. It does not export a `homeConfigurations` entry — the
 wrapper builds that.
 
@@ -93,7 +93,7 @@ wrapper instead:
 
 ```
 mkdir -p ~/.config/home-manager && cd ~/.config/home-manager
-nix flake init -t github:tbuildr/tnxhm#home-manager-wrapper
+nix flake init -t github:tbuildr/nixhm#home-manager-wrapper
 ```
 
 Edit the generated `flake.nix` and set:
@@ -126,29 +126,29 @@ Then run `tide configure` (see above).
 
 Your wrapper is the right place for `home.username`, `home.homeDirectory`, Git
 name/email/signing config, `allowed_signers`, personal Fish abbreviations, and
-any machine-specific env vars. It imports `tnxhm.homeModules.default` alongside
+any machine-specific env vars. It imports `nixhm.homeModules.default` alongside
 its own modules — never the reverse.
 
-Update the pinned `tnxhm` revision with:
+Update the pinned `nixhm` revision with:
 
 ```
-nix flake update tnxhm
+nix flake update nixhm
 nix flake check
 home-manager switch --flake .#YOUR_USERNAME
 ```
 
-## Developing tnxhm locally
+## Developing nixhm locally
 
 Test unpushed changes against your existing wrapper:
 
 ```
-git clone https://github.com/tbuildr/tnxhm ~/.config/tnxhm
+git clone https://github.com/tbuildr/nixhm ~/.config/nixhm
 home-manager switch \
   --flake ~/.config/home-manager#YOUR_USERNAME \
-  --override-input tnxhm path:$HOME/.config/tnxhm
+  --override-input nixhm path:$HOME/.config/nixhm
 ```
 
-Useful commands from a `tnxhm` checkout:
+Useful commands from a `nixhm` checkout:
 
 ```
 nix flake check          # validate

@@ -6,7 +6,7 @@
     pkgs,
     ...
   }: let
-    cfg = config.tnxhm.shell;
+    cfg = config.nixhm.shell;
   in {
     programs.fish = {
       enable = true;
