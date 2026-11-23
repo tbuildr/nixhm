@@ -52,6 +52,22 @@
         "type": "github"
       }
     },
+    "herdr-dips": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795394641,
+        "narHash": "sha256-JWrkn2B/O1r5P2envkpCwMl635Z1LHHnvH5eDSnlJLM=",
+        "ref": "refs/heads/main",
+        "rev": "86c7579252b14a0b2b43acf6c61f02dfdeea9bc7",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/tbuildr/herdr-dips"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/tbuildr/herdr-dips"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -198,6 +214,7 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
+        "herdr-dips": "herdr-dips",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",

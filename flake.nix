@@ -46,6 +46,14 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Herdr mods/layouts (smithy, trix). flake = false: files only, nothing in the
+    # repo is evaluated as Nix. Update on its own after aw review + land:
+    #   nix flake update herdr-dips
+    herdr-dips = {
+      url = "git+ssh://git@github.com/tbuildr/herdr-dips";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
