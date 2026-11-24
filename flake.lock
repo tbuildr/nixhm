@@ -55,11 +55,11 @@
     "herdr-dips": {
       "flake": false,
       "locked": {
-        "lastModified": 1795480413,
-        "narHash": "sha256-fuhRV/Yv06921iOqblG8SwzcwnwsZBq+p9TrmOYRAB0=",
+        "lastModified": 1795481368,
+        "narHash": "sha256-opCGqpSQRdEMV7uzSXtmA0CYxU8qajLvWEkmrrXHoW8=",
         "ref": "refs/heads/main",
-        "rev": "908ac6a0d4ed751718ab554702ff7dc90fcd10c7",
-        "revCount": 6,
+        "rev": "f48a4b55d8fb195bbd6306f5f8df7eff2f3e54eb",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/tbuildr/herdr-dips"
       },
