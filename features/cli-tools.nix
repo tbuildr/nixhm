@@ -12,14 +12,8 @@
       eza
       fd
       gitleaks
-      # Original:
-      # (config.lib.nixGL.wrap herdr-desktop)
-      #
-      # nixpkgs 0.1.10 is missing zstd in buildInputs (zstd-sys pkg-config probe fails).
-      # Drop the override once nixpkgs fixes it.
-      (config.lib.nixGL.wrap (herdr-desktop.overrideAttrs (old: {
-        buildInputs = (old.buildInputs or []) ++ [zstd];
-      })))
+      # Herdr desktop app, wrapped with nixGL for GPU access on non-NixOS.
+      (config.lib.nixGL.wrap herdr-desktop)
       huggingface-cli
       lazydocker
       kind
